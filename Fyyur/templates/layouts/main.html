@@ -88,7 +88,6 @@
 
     <!-- Begin page content -->
     <main id="content" role="main" class="container">
-
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages %}
@@ -117,6 +116,24 @@
   <script>window.jQuery || document.write('<script type="text/javascript" src="/static/js/libs/jquery-1.11.1.min.js"><\/script>')</script>
   <script type="text/javascript" src="/static/js/libs/bootstrap-3.1.1.min.js" defer></script>
   <script type="text/javascript" src="/static/js/plugins.js" defer></script>
-
+  
+  <script>
+    const crosses=document.querySelectorAll('.delete-button');
+    for (let i=0;i<crosses.length;i++){
+      const cross = crosses[i];
+      cross.onclick = function(e){
+        console.log('event',e);
+        const todoId = e.target.dataset["id"];
+        fetch('/venues/'+todoId,{
+          method: 'DELETE',
+        })
+        .then(function(){
+          const item = e.target.parentElement;
+          item.remove();
+        })
+      }
+    }
+  </script>
+  
 </body>
 </html>
