@@ -1,8 +1,6 @@
 #My Portfolio
 
-This is my portfolio
+This is my personal portfolio
 
 ## This is my work
-Refer a Flood
-FIMS
-DexSphere
+Fyyur - a site for artist to connect with each other
