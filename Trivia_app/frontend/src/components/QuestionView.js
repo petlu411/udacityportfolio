@@ -30,7 +30,7 @@ class QuestionView extends Component {
           questions: result.questions,
           totalQuestions: result.total_questions,
           categories: result.categories,
-          currentCategory: result.current_category })
+          currentCategory: result.category })
         return;
       },
       error: (error) => {
@@ -60,13 +60,14 @@ class QuestionView extends Component {
 
   getByCategory= (id) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      //url: `/categories/${id}/questions`, //TODO: update request URL
+      url: '/questions?category=${id}',
       type: "GET",
       success: (result) => {
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
-          currentCategory: result.current_category })
+          currentCategory: result.category })
         return;
       },
       error: (error) => {
@@ -82,7 +83,7 @@ class QuestionView extends Component {
       type: "POST",
       dataType: 'json',
       contentType: 'application/json',
-      data: JSON.stringify({searchTerm: searchTerm}),
+      data: JSON.stringify({search: searchTerm}),
       xhrFields: {
         withCredentials: true
       },
@@ -91,7 +92,7 @@ class QuestionView extends Component {
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
-          currentCategory: result.current_category })
+          currentCategory: result.category }) //category necessary?
         return;
       },
       error: (error) => {
@@ -127,8 +128,8 @@ class QuestionView extends Component {
           <ul>
             {Object.keys(this.state.categories).map((id, ) => (
               <li key={id} onClick={() => {this.getByCategory(id)}}>
-                {this.state.categories[id]}
-                <img className="category" src={`${this.state.categories[id]}.svg`}/>
+                <h3>{this.state.categories[id].type}</h3>
+                <img className="category" src={`${this.state.categories[id].type}.svg`}/>
               </li>
             ))}
           </ul>
@@ -141,7 +142,7 @@ class QuestionView extends Component {
               key={q.id}
               question={q.question}
               answer={q.answer}
-              category={this.state.categories[q.category]} 
+              category={this.state.categories[q.category-1].type}//this.state.categories[q.category]['type']} 
               difficulty={q.difficulty}
               questionAction={this.questionAction(q.id)}
             />
